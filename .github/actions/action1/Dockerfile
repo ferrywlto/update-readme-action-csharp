@@ -13,5 +13,5 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/runtime:6.0
-COPY --from=build-env /out .
+COPY --from=build /out .
 ENTRYPOINT [ "dotnet", "/action1.dll" ]
