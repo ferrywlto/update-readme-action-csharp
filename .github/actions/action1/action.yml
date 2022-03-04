@@ -15,4 +15,3 @@ runs:
   args:
     - ${{ inputs.file-to-update }}
   entrypoint: "/app/entrypoint.sh"
-  post-entrypoint: "/app/post-entrypoint.sh"

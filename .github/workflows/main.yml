@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Test
+name: ContentReplacer
 
 # Controls when the workflow will run
 on:
@@ -21,20 +21,26 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Hello world action step
-        id: hello
+      - name: ls from main.yml
+        run: ls
+
+      - name: action1
+        id: action1
         uses: ./.github/actions/action1
-        with:
-          who-to-greet: 'Octocat'
 
       # Use the output from the `hello` step
       # - name: Get the output time
       #   run: echo "The time was ${{ steps.hello.outputs.time }}"
 
-      # - name: List files
-      #   run: ls
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generated"
+          git push
+        shell: bash
 
       # Show file content
       - name: Show README.md content
