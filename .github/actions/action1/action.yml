@@ -12,8 +12,8 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
+  # args:
     # - "-v"
-    - "dotnet /app/action1.dll"
+    # - "dotnet /app/action1.dll"
     # - ${{ inputs.who-to-greet }}
   entrypoint: "/app/entrypoint.sh"

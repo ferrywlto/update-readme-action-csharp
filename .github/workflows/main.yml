@@ -23,9 +23,6 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
 
-      # - name: List files
-      #   run: ls
-
       - name: Hello world action step
         id: hello
         uses: ./.github/actions/action1
@@ -35,3 +32,10 @@ jobs:
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
+
+      - name: List files
+        run: ls
+
+      # Show file content
+      - name: Show README.md content
+        run: echo "$(<README.md)"
