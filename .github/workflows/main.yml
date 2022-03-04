@@ -23,14 +23,14 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
 
-      - name: List files
-        run: ls
+      # - name: List files
+      #   run: ls
 
       - name: Hello world action step
         id: hello
         uses: ./.github/actions/action1
         with:
-          who-to-greet: '##Mona the Octocat##'
+          who-to-greet: 'Octocat'
 
       # Use the output from the `hello` step
       - name: Get the output time

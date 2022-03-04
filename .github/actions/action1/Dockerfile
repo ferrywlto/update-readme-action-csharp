@@ -7,11 +7,12 @@
 # # Code file to execute when the docker container starts up (`entrypoint.sh`)
 # ENTRYPOINT ["/entrypoint.sh"]
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 as builder
+WORKDIR /app
+COPY . .
+RUN dotnet publish -c Release -o /out
+COPY entrypoint.sh /out/entrypoint.sh
 
-COPY . ./
-RUN dotnet publish -c Release -o out
-
-FROM mcr.microsoft.com/dotnet/runtime:6.0
-COPY --from=build /out .
-ENTRYPOINT [ "dotnet", "/action1.dll" ]
+FROM mcr.microsoft.com/dotnet/runtime:6.0 as base
+WORKDIR /app
+COPY --from=builder /out .
