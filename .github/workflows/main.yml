@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Hello world action step
         id: hello
@@ -30,11 +30,11 @@ jobs:
           who-to-greet: 'Octocat'
 
       # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+      # - name: Get the output time
+      #   run: echo "The time was ${{ steps.hello.outputs.time }}"
 
-      - name: List files
-        run: ls
+      # - name: List files
+      #   run: ls
 
       # Show file content
       - name: Show README.md content

@@ -2,18 +2,17 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  file-to-update:  # id of input
+    description: 'File to update. Default to README.md'
     required: true
-    default: 'World'
+    default: 'README.md'
 # outputs:
 #   time: # id of output
 #     description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  # args:
-    # - "-v"
-    # - "dotnet /app/action1.dll"
-    # - ${{ inputs.who-to-greet }}
+  args:
+    - ${{ inputs.file-to-update }}
   entrypoint: "/app/entrypoint.sh"
+  post-entrypoint: "/app/post-entrypoint.sh"

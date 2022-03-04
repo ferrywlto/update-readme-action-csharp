@@ -12,6 +12,7 @@ WORKDIR /app
 COPY . .
 RUN dotnet publish -c Release -o /out
 COPY entrypoint.sh /out/entrypoint.sh
+COPY post-entrypoint.sh /out/post-entrypoint.sh
 
 FROM mcr.microsoft.com/dotnet/runtime:6.0 as base
 WORKDIR /app

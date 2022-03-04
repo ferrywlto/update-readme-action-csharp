@@ -5,4 +5,4 @@
 # echo "::set-output name=time::$time"
 
 # exec ls | $@
-dotnet /app/action1.dll $(ls)
+dotnet /app/action1.dll $1
