@@ -9,6 +9,11 @@ if(args.Length > 0) {
     {
         var fileInfo = new FileInfo(args[0]);
         Console.WriteLine($"File: {fileInfo.FullName}");
+        Console.WriteLine($"Content:");
+        var lines = File.ReadAllLines(args[0]);
+        foreach(var line in lines) {
+            Console.WriteLine(line);
+        }
     }
     else if(Directory.Exists(args[0])) {
         var dirInfo = new DirectoryInfo(args[0]);
@@ -19,5 +24,5 @@ if(args.Length > 0) {
 
 
 
-var time = DateTime.Now;
+var time = DateTime.Now.ToUniversalTime().AddHours(8);
 Console.WriteLine($"::set-output name=time::{time}");
