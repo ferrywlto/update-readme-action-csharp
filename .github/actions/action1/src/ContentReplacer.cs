@@ -1,7 +1,4 @@
-// See https://aka.ms/new-console-template for more information
 using System.Text;
-// var time = DateTime.Now.ToUniversalTime().AddHours(8);
-// Console.WriteLine($"::set-output name=time::{time}");
 
 public class ContentReplacer {
     private readonly string _context;

@@ -767,3 +767,4 @@ dist
 local-*.sh
 # exclude local .net solution files
 .sln
+.vscode/
