@@ -1,30 +1,31 @@
-﻿Console.WriteLine($"args: {args.Length}");
-if(args.Length > 0) {
-    if(File.Exists(args[0]))
-    {
-        var fileName = args[0];
-        var soUserId = int.Parse(args[1]);
-        // var fileInfo = new FileInfo(args[0]);
-        // Console.WriteLine($"File: {fileInfo.FullName}");
-        var text = File.ReadAllText(fileName);
-        // Console.WriteLine($"Content:");
-        // Console.WriteLine(text);
-        // var newText = text.Replace("CODE", "MAID");
-        // File.WriteAllText(args[0], newText);
+﻿using System.Text;
 
-        var startPhrase = "<!-- BLOG-POST-LIST:START -->";
-        var endPhrase = "<!-- BLOG-POST-LIST:END -->";
-        var replacer = new ContentReplacer(text);
+Console.WriteLine($"args: {args.Length}");
+if(args.Length <= 0) throw new ArgumentException("Please supply arguments.");
 
-        var soLoader = new StackoverflowContentLoader();
-        var newContent = await soLoader.LoadAndParseContent(soUserId);
-        File.WriteAllText(fileName, replacer.ReplaceContentBetween(startPhrase, endPhrase, newContent));
+var filePath = args[0];
+if(!File.Exists(filePath)) throw new FileNotFoundException($"Cannot find file {filePath} to edit.");
 
-        Console.WriteLine(newContent);
-    }
-    else if(Directory.Exists(args[0])) {
-        var dirInfo = new DirectoryInfo(args[0]);
-        Console.WriteLine($"Directory: {dirInfo.FullName}");
-    }
+var text = File.ReadAllText(filePath);
+var replacer = new ContentReplacer(text);
+// var sb = new StringBuilder(text);
+
+int soUserId;
+if (args.Length > 1) {
+    if(args[1].Equals("unknown"))
+        throw new ArgumentException("Please supply arguemnt: `stackoverflow-user-id` to action.");
+
+    soUserId = int.Parse(args[1]);
+    var soLoader = new StackoverflowContentLoader();
+    var newContent = await soLoader.LoadAndParseContent(soUserId);
+
+    var startPhrase = "<!-- STACKOVERFLOW:START -->";
+    var endPhrase = "<!-- STACKOVERFLOW:END -->";
+    text = replacer.ReplaceContentBetween(startPhrase, endPhrase, newContent);
 }
+
+File.WriteAllText(filePath, text);
+
+
 //https://api.stackexchange.com/docs
+//https://github.com/Medium/medium-api-docs

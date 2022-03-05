@@ -4,25 +4,14 @@ using System.Text;
 
 public class StackoverflowContentLoader
 {
-    private readonly string apiVersion;
-
-    public StackoverflowContentLoader(string apiVersion = "2.3")
-    {
-        this.apiVersion = apiVersion;
-    }
-
     private const string StackExchangeApiUrl = "https://api.stackexchange.com/{0}/users/{1}{2}";
     private const string UserInfoApiUrl = "?page=1&pagesize=1&order=desc&sort=reputation&site=stackoverflow&filter=!LnNkvuC9lzrynVb9G.NQ4b";
     private const string UserActivityApiUrl = "/network-activity?page=1&pagesize=10&types=posts&filter=!2(C)X8o(hr(Y*aLv6ujVv";
     private const string ListEntryPattern = " - [{0} by {1} for {2}]({3})";
-    private string GetUserInfoApiUrl(int userId)
+    private readonly string apiVersion;
+    public StackoverflowContentLoader(string apiVersion = "2.3")
     {
-        return string.Format(StackExchangeApiUrl, apiVersion, userId, UserInfoApiUrl);
-    }
-
-    private string GetUserActivityApiUrl(int accountId)
-    {
-        return string.Format(StackExchangeApiUrl, apiVersion, accountId, UserActivityApiUrl);
+        this.apiVersion = apiVersion;
     }
     public async Task<string> LoadAndParseContent(int userId)
     {
@@ -36,7 +25,7 @@ public class StackoverflowContentLoader
         if (!activities.Any()) return string.Empty;
 
         var result = new StringBuilder();
-            for (var i = 0; i < activities.Length; i += 1)
+        for (var i = 0; i < activities.Length; i += 1)
         {
             var activity = activities[i];
             result.AppendLine(string.Format(ListEntryPattern, GetActivityType(activity.ActivityType), user.DisplayName, activity.Title, activity.Link));
@@ -44,7 +33,14 @@ public class StackoverflowContentLoader
 
         return result.ToString();
     }
-
+    private string GetUserInfoApiUrl(int userId)
+    {
+        return string.Format(StackExchangeApiUrl, apiVersion, userId, UserInfoApiUrl);
+    }
+    private string GetUserActivityApiUrl(int accountId)
+    {
+        return string.Format(StackExchangeApiUrl, apiVersion, accountId, UserActivityApiUrl);
+    }
     private static string GetActivityType(string type)
     {
         type = type.Replace("_posted", string.Empty);
@@ -56,7 +52,6 @@ public class StackoverflowContentLoader
             _ => string.Empty
         };
     }
-
     private static async Task<T[]> LoadFromStackExchangeApi<T>(string url)
     {
         Console.WriteLine(url);

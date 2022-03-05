@@ -28,6 +28,8 @@ jobs:
       - name: action1
         id: action1
         uses: ./.github/actions/action1
+        with:
+          stackoverflow-user-id: 2952180
 
       # Use the output from the `hello` step
       # - name: Get the output time
