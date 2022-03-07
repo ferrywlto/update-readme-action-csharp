@@ -109,9 +109,9 @@ ActionScript was my favourite language before the death of Flash. Now I focus on
     Latest Medium Stories
   </b></summary>
 
-<!-- BLOG-POST-LIST:START -->
+<!-- MEDIUM:START -->
 Hello World!
-<!-- BLOG-POST-LIST:END -->
+<!-- MEDIUM:END -->
 </details>
 <br/>
 <details>
