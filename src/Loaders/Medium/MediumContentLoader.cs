@@ -9,7 +9,6 @@ public class MediumContentLoader : IContentLoader
     {
         using var httpclient = new HttpClient();
         var url = GetRssFeedUrl(userId);
-        Console.WriteLine(url);
 
         var response = await httpclient.GetStreamAsync(url);
 

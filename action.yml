@@ -1,8 +1,7 @@
-# action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Update README.md using C#'
+description: 'Update your repository README.md with latest Medium and Stackoverflow posts'
 inputs:
-  file-to-update:  # id of input
+  file-to-update:
     description: 'File to update. Default to README.md'
     required: true
     default: 'README.md'

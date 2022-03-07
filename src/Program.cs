@@ -1,5 +1,4 @@
-﻿Console.WriteLine($"args: {args.Length}");
-if (args.Length <= 0) throw new ArgumentException("Please supply arguments.");
+﻿if (args.Length <= 0) throw new ArgumentException("Please supply arguments.");
 
 var filePath = args[0];
 

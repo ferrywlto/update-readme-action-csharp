@@ -56,7 +56,6 @@ public class StackoverflowContentLoader : IContentLoader
     }
     private static async Task<T[]> LoadFromStackExchangeApi<T>(string url)
     {
-        Console.WriteLine(url);
         using var handler = new HttpClientHandler
         {
             AutomaticDecompression = DecompressionMethods.GZip
