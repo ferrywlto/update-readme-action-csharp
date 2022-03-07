@@ -12,14 +12,15 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
 
-      - name: action1
-        id: action1
-        uses: ./.github/actions/action1
+      - name: Update README.md
+        id: update-readme
+        uses: .
         with:
           medium-user-id: ${{ secrets.MEDIUM_USER_ID }}
           stackoverflow-user-id: ${{ secrets.STACKOVERFLOW_USER_ID }}
 
-      - run: |
+      - name: Commit README.md changes.
+        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
