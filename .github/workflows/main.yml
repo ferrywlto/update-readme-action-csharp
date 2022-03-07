@@ -14,7 +14,7 @@ jobs:
 
       - name: Update README.md
         id: update-readme
-        uses: .
+        uses: ./
         with:
           medium-user-id: ${{ secrets.MEDIUM_USER_ID }}
           stackoverflow-user-id: ${{ secrets.STACKOVERFLOW_USER_ID }}
