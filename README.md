@@ -1,4 +1,4 @@
-## update-readme-action-csharp
+## Update README action using C#
 
 ### Purpose
 This repository contains a public Custom Docker Container GitHub Action that:
@@ -14,9 +14,9 @@ Note that there is nothing wrong to use other's actions to speed up your work an
 
 The code also written in a way that is easy to extend for adding more blog post source, and easy to configure.
 
-### Usage
+## Usage
 
-This action contains 3 parameters:
+### This action contains 3 parameters:
 
 | Name | Default | Order
 | :-- | :-- | :-- |
@@ -24,7 +24,17 @@ This action contains 3 parameters:
 | medium-user-id | unknown | 2 |
 | stackoverflow-user-id | unknown | 3 |
 
-Sample code
+### Your README.md should contains the following fragments:
+```html
+<!-- MEDIUM:START -->
+Text will be replaced.
+<!-- MEDIUM:END -->
+<!-- STACKOVERFLOW:START -->
+Text will be replaced.
+<!-- STACKOVERFLOW:END -->
+```
+
+### Sample code
 
 <b>Note: You should use GitHub repository/environment secrets for your user IDs</b>
 
@@ -36,3 +46,34 @@ Sample code
     medium-user-id: ${{ secrets.MEDIUM_USER_ID }}
     stackoverflow-user-id: ${{ secrets.STACKOVERFLOW_USER_ID }}
 ```
+
+Supply `file-to-update` argument if the file your want to update named something else:
+```yaml
+- uses: ferrywlto/update-readme-action-csharp@v1
+  with:
+    file-to-update: MyFile.txt
+    medium-user-id: ${{ secrets.MEDIUM_USER_ID }}
+    stackoverflow-user-id: ${{ secrets.STACKOVERFLOW_USER_ID }}
+```
+
+Don't like "START", "END", or you want pattern other than `<!-- SOMETHING:START -->`?
+For example, fork me and add this in `Program.cs`:
+```c#
+ContentReplacer.SetMarkerPattern("<!-- #{0}#{1}# -->", "BEGIN", "FINISH");
+```
+Then the action will look for `<!-- #MEDIUM#BEGIN# -->` and `<!-- #MEDIUM#END# -->` to insert content.
+
+
+### Troubleshooting
+
+- `IndexOutOfRangeException`
+
+Make sure your README.md contains required comment tags.
+
+### Extending functionality
+
+Let say we want to add links from other source (e.g. [dev.to](https://dev.to/)) as well.
+
+1. Create a content loader class that implements `IContentLoader`
+2. Add new entry in `ContentLoaderFactory.GetContentLoader()`
+3. Add new marker tags into your `README.md`
