@@ -1,5 +1,8 @@
 name: 'Update README.md using C#'
 description: 'Update your repository README.md with latest Medium and Stackoverflow posts'
+branding:
+  icon: arrow-right-circle
+  color: purple
 inputs:
   file-to-update:
     description: 'File to update. Default to README.md'
