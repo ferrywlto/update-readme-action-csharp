@@ -6,17 +6,19 @@ inputs:
     description: 'File to update. Default to README.md'
     required: true
     default: 'README.md'
+  medium-user-id:
+    description: 'Medium User ID'
+    required: true
+    default: 'unknown'
   stackoverflow-user-id:
     description: 'Stackoverflow User ID'
     required: true
     default: 'unknown'
-# outputs:
-#   time: # id of output
-#     description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.file-to-update }}
+    - ${{ inputs.medium-user-id }}
     - ${{ inputs.stackoverflow-user-id }}
   entrypoint: "/app/entrypoint.sh"

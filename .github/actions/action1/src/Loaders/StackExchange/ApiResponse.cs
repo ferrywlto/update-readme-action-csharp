@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-public record StackExchangeApiResponse<T>(
+public record ApiResponse<T>(
     [property: JsonPropertyName("items")]
     T[] Items
 );

@@ -10,14 +10,24 @@ var text = File.ReadAllText(filePath);
 var replacer = new ContentReplacer(text);
 // var sb = new StringBuilder(text);
 
-int soUserId;
 if (args.Length > 1) {
     if(args[1].Equals("unknown"))
+        throw new ArgumentException("Please supply arguemnt: `medium-user-id` to action.");
+
+    var soLoader = new MediumContentLoader();
+    var newContent = await soLoader.LoadAndParseContentAsync(args[1]);
+
+    var startPhrase = "<!-- MEDIUM:START -->";
+    var endPhrase = "<!-- MEDIUM:END -->";
+    text = replacer.ReplaceContentBetween(startPhrase, endPhrase, newContent);
+}
+
+if (args.Length > 2) {
+    if(args[2].Equals("unknown"))
         throw new ArgumentException("Please supply arguemnt: `stackoverflow-user-id` to action.");
 
-    soUserId = int.Parse(args[1]);
     var soLoader = new StackoverflowContentLoader();
-    var newContent = await soLoader.LoadAndParseContent(soUserId);
+    var newContent = await soLoader.LoadAndParseContentAsync(args[2]);
 
     var startPhrase = "<!-- STACKOVERFLOW:START -->";
     var endPhrase = "<!-- STACKOVERFLOW:END -->";
@@ -29,3 +39,4 @@ File.WriteAllText(filePath, text);
 
 //https://api.stackexchange.com/docs
 //https://github.com/Medium/medium-api-docs
+//293b75ad72ca711572570de4ae4c66d7d4f1b5408eb4e1ab2b698e50c488a813d
