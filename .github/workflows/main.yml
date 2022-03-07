@@ -29,7 +29,8 @@ jobs:
         id: action1
         uses: ./.github/actions/action1
         with:
-          stackoverflow-user-id: 2952180
+          medium-user-id: ${{ secrets.MEDIUM_USER_ID }}
+          stackoverflow-user-id: ${{ secrets.STACKOVERFLOW_USER_ID }}
 
       # Use the output from the `hello` step
       # - name: Get the output time
