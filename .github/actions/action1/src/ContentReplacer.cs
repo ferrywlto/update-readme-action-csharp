@@ -1,20 +1,26 @@
 using System.Text;
 
-public class ContentReplacer {
-    private readonly string _context;
+public class ContentReplacer
+{
+    private static string _markerPattern = "<!-- {0}:{1} -->";
+    private static string _markerStartText = "START";
+    private static string _markerEndText = "END";
+    private readonly string _identifier;
 
-    public ContentReplacer(string context) {
-        _context = context;
+    public static void SetMarkerPattern(string pattern, string startText = "START", string endText = "END")
+    {
+        _markerPattern = pattern;
+        _markerStartText = startText;
+        _markerEndText = endText;
     }
-    private int BeginIndex(string phraseToFind) => _context.IndexOf(phraseToFind) + phraseToFind.Length;
 
-    private int EndIndex(string phraseToFind) => _context.LastIndexOf(phraseToFind);
-
-    public string ReplaceContentBetween(string patternBegin, string patternEnd, string newContent) {
-        var textBeforeBegin = _context[..BeginIndex(patternBegin)];
-        var textAfterEnd = _context[EndIndex(patternEnd)..];
-        return Concatenate(textBeforeBegin, newContent, textAfterEnd);
+    public ContentReplacer(string identifier)
+    {
+        _identifier = identifier;
     }
+
+    public string ReplaceContentBetweenMarker(string text, string newContent)
+    => Concatenate(TextBeforeMarker(text), newContent, TextAfterMarker(text));
 
     private static string Concatenate(string prefix, string content, string suffix)
      => new StringBuilder(prefix)
@@ -23,4 +29,11 @@ public class ContentReplacer {
         .Append(Environment.NewLine)
         .Append(suffix)
         .ToString();
+    private string TextBeforeMarker(string text) => text[..BeginIndex(text, BeginMarker)];
+    private string TextAfterMarker(string text) => text[EndIndex(text, EndMarker)..];
+    private string BeginMarker => string.Format(_markerPattern, _identifier, _markerStartText);
+    private string EndMarker => string.Format(_markerPattern, _identifier, _markerEndText);
+    private static int BeginIndex(string text, string phraseToFind) => text.IndexOf(phraseToFind) + phraseToFind.Length;
+    private static int EndIndex(string text, string phraseToFind) => text.LastIndexOf(phraseToFind);
+
 }

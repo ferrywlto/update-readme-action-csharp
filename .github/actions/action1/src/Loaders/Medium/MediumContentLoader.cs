@@ -8,7 +8,10 @@ public class MediumContentLoader : IContentLoader
     public async Task<string> LoadAndParseContentAsync(string userId)
     {
         using var httpclient = new HttpClient();
-        var response = await httpclient.GetStreamAsync(GetRssFeedUrl(userId));
+        var url = GetRssFeedUrl(userId);
+        Console.WriteLine(url);
+
+        var response = await httpclient.GetStreamAsync(url);
 
         if (response == null || !response.CanRead) return string.Empty;
 
@@ -20,7 +23,10 @@ public class MediumContentLoader : IContentLoader
 
         var stories = feed.Channels[0].Stories;
         var sb = new StringBuilder();
-        stories.ForEach(story => sb.AppendLine(GetListStr(story)));
+        stories.ForEach(story =>
+        {
+            sb.AppendLine(GetListStr(story));
+        });
 
         return sb.ToString();
     }
