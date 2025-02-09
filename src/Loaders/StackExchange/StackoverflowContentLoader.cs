@@ -61,6 +61,8 @@ public class StackoverflowContentLoader : IContentLoader
             AutomaticDecompression = DecompressionMethods.GZip
         };
         using var httpClient = new HttpClient(handler);
+        httpClient.DefaultRequestHeaders.Add("User-Agent", "GitHub Action for my own profile");
+        
         var response = await httpClient.GetFromJsonAsync<ApiResponse<T>>(url);
         if (response != null && response.Items.Any())
         {
