@@ -1,6 +1,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 
+namespace Loaders.Medium;
 public record Story
 {
     [XmlElement("title")]

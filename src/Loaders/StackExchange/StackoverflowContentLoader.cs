@@ -2,29 +2,25 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 
-public class StackoverflowContentLoader : IContentLoader
+namespace Loaders.StackExchange;
+public class StackoverflowContentLoader(string apiVersion = "2.3") : IContentLoader
 {
     private const string StackExchangeApiUrl = "https://api.stackexchange.com/{0}/users/{1}{2}";
     private const string UserInfoApiUrl = "?page=1&pagesize=1&order=desc&sort=reputation&site=stackoverflow";
     private const string UserActivityApiUrl = "/network-activity?page=1&pagesize=10&types=posts";
     private const string OutputPattern = " - [{0} by {1} for {2}]({3})";
-    private readonly string apiVersion;
-
-    public StackoverflowContentLoader(string apiVersion = "2.3")
-    {
-        this.apiVersion = apiVersion;
-    }
+    private readonly string apiVersion = apiVersion;
 
     public async Task<string> LoadAndParseContentAsync(string userId)
     {
         var users = await LoadFromStackExchangeApi<UserInfo>(GetUserInfoApiUrl(userId));
-        if (!users.Any()) return string.Empty;
+        if (users.Length == 0) return string.Empty;
 
         var user = users[0];
         if (user == null) return string.Empty;
 
         var activities = await LoadFromStackExchangeApi<UserActivity>(GetUserActivityApiUrl(user.AccountId.ToString()));
-        if (!activities.Any()) return string.Empty;
+        if (activities.Length == 0) return string.Empty;
 
         var result = new StringBuilder();
         for (var i = 0; i < activities.Length; i += 1)
@@ -64,10 +60,10 @@ public class StackoverflowContentLoader : IContentLoader
         httpClient.DefaultRequestHeaders.Add("User-Agent", "GitHub Action for my own profile");
         
         var response = await httpClient.GetFromJsonAsync<ApiResponse<T>>(url);
-        if (response != null && response.Items.Any())
+        if (response != null && response.Items.Length != 0)
         {
             return response.Items;
         }
-        return Array.Empty<T>();
+        return [];
     }
 }

@@ -1,6 +1,9 @@
+using Loaders;
+
+namespace GitHub.Actions.UpdateReadme.CSharp;
 public class ReplaceReadmeContentAction
 {
-    private readonly List<Step> steps = new();
+    private readonly List<Step> steps = [];
 
     public void AddStep(Step config)
     {

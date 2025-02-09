@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 
+namespace Loaders.StackExchange;
 public record UserInfo(
     [property: JsonPropertyName("account_id")]
     int AccountId,

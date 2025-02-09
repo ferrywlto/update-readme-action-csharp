@@ -1,10 +1,13 @@
-﻿if (args.Length <= 0) throw new ArgumentException("Please supply arguments.");
+﻿using GitHub.Actions.UpdateReadme.CSharp;
+using Loaders;
+
+if (args.Length <= 0) throw new ArgumentException("Please supply arguments.");
 
 var filePath = args[0];
 
 if (!File.Exists(filePath)) throw new FileNotFoundException($"Cannot find file {filePath} to edit.");
 
-string[] sequence = new[] {"","MEDIUM", "STACKOVERFLOW"};
+string[] sequence = ["","MEDIUM", "STACKOVERFLOW"];
 var action = new ReplaceReadmeContentAction();
 
 const string paramValueDefault = "unknown";

@@ -1,5 +1,7 @@
 using System.Text;
 using System.Xml.Serialization;
+
+namespace Loaders.Medium;
 public class MediumContentLoader : IContentLoader
 {
     private const string feedEndpoint = "https://medium.com/feed/@{0}";

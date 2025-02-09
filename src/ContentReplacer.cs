@@ -1,22 +1,17 @@
 using System.Text;
 
-public class ContentReplacer
+public class ContentReplacer(string identifier)
 {
     private static string _markerPattern = "<!-- {0}:{1} -->";
     private static string _markerStartText = "START";
     private static string _markerEndText = "END";
-    private readonly string _identifier;
+    private readonly string _identifier = identifier;
 
     public static void SetMarkerPattern(string pattern, string startText = "START", string endText = "END")
     {
         _markerPattern = pattern;
         _markerStartText = startText;
         _markerEndText = endText;
-    }
-
-    public ContentReplacer(string identifier)
-    {
-        _identifier = identifier;
     }
 
     public string ReplaceContentBetweenMarker(string text, string newContent)

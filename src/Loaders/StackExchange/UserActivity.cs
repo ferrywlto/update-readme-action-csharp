@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 
+namespace Loaders.StackExchange;
 public record UserActivity(
     [property: JsonPropertyName("creation_date")]
     int CreationDate,

@@ -1,6 +1,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 
+namespace Loaders.Medium;
 [XmlRoot("rss")]
 public record RssFeed
 {
@@ -9,6 +10,6 @@ public record RssFeed
 
     public RssFeed()
     {
-        Channels = new List<Channel>();
+        Channels = [];
     }
 }

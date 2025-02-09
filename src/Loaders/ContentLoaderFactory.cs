@@ -1,3 +1,7 @@
+using Loaders.Medium;
+using Loaders.StackExchange;
+
+namespace Loaders;
 public static class ContentLoaderFactory
 {
     public static IContentLoader GetContentLoader(string loaderName)
