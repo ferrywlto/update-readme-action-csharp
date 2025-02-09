@@ -5,8 +5,8 @@ using System.Text;
 public class StackoverflowContentLoader : IContentLoader
 {
     private const string StackExchangeApiUrl = "https://api.stackexchange.com/{0}/users/{1}{2}";
-    private const string UserInfoApiUrl = "?page=1&pagesize=1&order=desc&sort=reputation&site=stackoverflow&filter=!LnNkvuC9lzrynVb9G.NQ4b";
-    private const string UserActivityApiUrl = "/network-activity?page=1&pagesize=10&types=posts&filter=!2(C)X8o(hr(Y*aLv6ujVv";
+    private const string UserInfoApiUrl = "?page=1&pagesize=1&order=desc&sort=reputation&site=stackoverflow";
+    private const string UserActivityApiUrl = "/network-activity?page=1&pagesize=10&types=posts";
     private const string OutputPattern = " - [{0} by {1} for {2}]({3})";
     private readonly string apiVersion;
 
